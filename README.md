@@ -21,6 +21,8 @@ Clone the project repository to your local machine:
 git clone https://github.com/aurangzebkhanse/ProductCatalog
 
 ### 2. Build and Run with Docker Compose
+
+Go to the main solution folder containing docker-compose.yml file.
 Use Docker Compose to build and run the containers:
 
 docker-compose up --build
