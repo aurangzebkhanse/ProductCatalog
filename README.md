@@ -50,10 +50,6 @@ To make changes to the product catalog, you must log in as an admin:
 - **Username**: `admin`
 - **Password**: `password`
 
-The login endpoint is available at:
-
-POST http://localhost:5000/api/v1/auth/login
-
 ### 5. Stopping the Containers
 To stop the running containers, use:
 
@@ -73,7 +69,6 @@ The API is accessible at:
 http://localhost:5000/api/v1
 
 Note: The API uses versioning, and the current version is '1'.
-
 
 ### Authentication
 
