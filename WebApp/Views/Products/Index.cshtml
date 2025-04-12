@@ -1,0 +1,38 @@
+﻿@model List<ProductDTO>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Products</h2>
+    <a href="/Products/Create" class="btn btn-primary mb-3">Create New Product</a>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <a href="/Products/Edit/@product.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <form method="post" action="/Products/Delete/@product.Id" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+    }
+</div>

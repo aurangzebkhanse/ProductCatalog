@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    ports:
+      - "5000:80" # Expose API on port 5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network
+
+  webapp:
+    build:
+      context: .
+      dockerfile: WebApp/Dockerfile
+    ports:
+      - "8080:80" # Expose WebApp on port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ApiBaseUrl=http://api/api/v1 # Point WebApp to the API service
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
