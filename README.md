@@ -7,7 +7,7 @@ This project consists of three main components:
 
 ## Prerequisites
 
-Before running the project, ensure you have the following installed:
+Before running the project, ensure you have the following installed and docker is running locally on your machine:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
@@ -154,7 +154,7 @@ Post /products
 }
 
 - Error Responses:
-•	401 Unauthorized: If the user is not authenticated as an admin.
+â€¢	401 Unauthorized: If the user is not authenticated as an admin.
 
 - Note: Requires admin authentication.
 
@@ -173,9 +173,9 @@ PUT /products/{id}
 - Response: 204 No Content
 
 - Error Responses:
-•	400 Bad Request: If the id in the URL does not match the id in the request body.
-•	404 Not Found: If the product with the specified ID does not exist.
-•	401 Unauthorized: If the user is not authenticated as an admin.
+â€¢	400 Bad Request: If the id in the URL does not match the id in the request body.
+â€¢	404 Not Found: If the product with the specified ID does not exist.
+â€¢	401 Unauthorized: If the user is not authenticated as an admin.
 
 - Note: Requires admin authentication.
 
@@ -187,8 +187,8 @@ DELETE /products/{id}
 - Response: 204 No Content
 
 - Error Responses:
-•	404 Not Found: If the product with the specified ID does not exist.
-•	401 Unauthorized: If the user is not authenticated as an admin.
+â€¢	404 Not Found: If the product with the specified ID does not exist.
+â€¢	401 Unauthorized: If the user is not authenticated as an admin.
 
 - Note: Requires admin authentication.
 
