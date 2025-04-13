@@ -23,57 +23,91 @@ namespace Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            try
+            {
+                return await _context.Products.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving products.", error = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null) return NotFound();
-            return product;
+            try
+            {
+                var product = await _context.Products.FindAsync(id);
+                if (product == null) return NotFound(new { message = "Product not found." });
+                return product;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving the product.", error = ex.Message });
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            try
+            {
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while creating the product.", error = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
-            if (id != product.Id)
-                return BadRequest();
+            try
+            {
+                if (id != product.Id)
+                    return BadRequest(new { message = "Product ID mismatch." });
 
-            // Check if the product exists in the database
-            var existingProduct = await _context.Products.FindAsync(id);
-            if (existingProduct == null)
-                return NotFound();
+                var existingProduct = await _context.Products.FindAsync(id);
+                if (existingProduct == null)
+                    return NotFound(new { message = "Product not found." });
 
-            // Update the existing product's properties
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
-            existingProduct.Price = product.Price;
-            existingProduct.Stock = product.Stock;
+                existingProduct.Name = product.Name;
+                existingProduct.Description = product.Description;
+                existingProduct.Price = product.Price;
+                existingProduct.Stock = product.Stock;
 
-            // Save changes
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the product.", error = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null) return NotFound();
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            try
+            {
+                var product = await _context.Products.FindAsync(id);
+                if (product == null) return NotFound(new { message = "Product not found." });
+
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while deleting the product.", error = ex.Message });
+            }
         }
     }
 }
